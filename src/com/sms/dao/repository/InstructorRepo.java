@@ -5,21 +5,23 @@ import com.sms.model.Instructor;
 import com.sms.util.EntityManagerUtil;
 
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
-import static com.sms.maintest.TestClass.entityManager;
 
 public class InstructorRepo implements ICrud<Instructor> {
 
+    @PersistenceContext
+    EntityManager entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
+
     @Override
     public List<Instructor> getAllData() {
-        isOpenEntityMenager();
         return entityManager.createQuery("from Instructor ", Instructor.class).getResultList();
     }
 
     @Override
     public Instructor findById(long id) {
-        isOpenEntityMenager();
         return entityManager.find(Instructor.class,id);
     }
 
@@ -31,7 +33,6 @@ public class InstructorRepo implements ICrud<Instructor> {
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
-        }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
         }
     }
@@ -46,6 +47,7 @@ public class InstructorRepo implements ICrud<Instructor> {
         }finally {
             entityManager.getTransaction().commit();
             EntityManagerUtil.closeEntityManager(entityManager);
+
         }
         return null;
     }
@@ -58,13 +60,9 @@ public class InstructorRepo implements ICrud<Instructor> {
             entityManager.getTransaction().commit();
         }catch (Exception e){
             entityManager.getTransaction().rollback();
-        }finally {
             EntityManagerUtil.closeEntityManager(entityManager);
         }
     }
 
-    public void isOpenEntityMenager(){
-        if(entityManager != null)
-            entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
-    }
+
 }

@@ -10,7 +10,8 @@ import java.time.Month;
 import java.util.List;
 
 public class TestClass {
-    public static EntityManager entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
+    //public static EntityManager entityManager = EntityManagerUtil.getEntityManager("mysqlPU");
+
 
     public static void main(String[] args) {
         saveTestData();
